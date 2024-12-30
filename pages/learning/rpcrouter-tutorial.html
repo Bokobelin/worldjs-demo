@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learn how to use the RPC router in World.js</title>
+    <style>
+        html, body {
+            display: flex;
+            width: 99vw;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            overflow-x: clip;
+        }
+
+        .center {
+            text-align: center;
+            width: 100vw;
+        }
+
+        .code {
+            /*
+            margin: 5vh;
+            padding: 1.5vh;
+            */
+            margin-left: 5vh;
+            margin-right: 5vh;
+            background-color: darkslategrey;
+            color: wheat;
+            width: fit-content;
+            line-break: anywhere;
+        }
+
+        p {
+            padding-left: 5vh;
+            padding-right: 5vh;
+        }
+    </style>
+</head>
+<body>
+    <h1>Learn the RPC router</h1>
+    <p>
+        To use the RPC router, you first need to download the RPC router on the <a href="/download">downloads page</a>.
+        Then, import it in your project and reference it through a &lt;script&gt; tag.
+        <br>
+        Now, create a script tag as usual.
+        Inside it, create a new WorldRPCRouter following the WorldRouter model.
+        Then, use the addActionRoute method to create an Action Route. It is just a route (e.g. /sayHello), but instead of loading HTML it loads a javascript function.
+        <code>
+            <pre>
+&lt;script&gt;
+    // Initialize the router
+    const router = new WorldRPCRouter();
+
+    // Define a route and associate it with a function
+    router.addActionRoute('/sayhello', sayHello);
+
+    // Example function to be executed when /sayhello is accessed
+    function sayHello() {
+        alert('Hello!');
+    }
+
+    // Example of navigating to the route programmatically
+    document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('helloButton').addEventListener('click', () => {
+            router.navigateTo('/sayhello');
+        });
+    });
+&lt;/script&gt;
+            </pre>
+        </code>
+        Don't forget to add a button with a id of 'helloButton'.
+        Here's a demo:
+    </p>
+        <button type="button" id="helloButton">Click here!</button>
+        <script src="./../../world-rpcrouter.js"></script>
+        <script>
+            // Initialize the router
+            const router = new WorldRPCRouter();
+
+            // Define a route and associate it with a function
+            router.addActionRoute('/sayhello', sayHello);
+
+            // Example function to be executed when /sayhello is accessed
+            function sayHello() {
+                alert('Hello!');
+            }
+
+            // Example of navigating to the route programmatically
+            document.addEventListener('DOMContentLoaded', () => {
+                document.getElementById('helloButton').addEventListener('click', () => {
+                    router.navigateTo('/sayhello');
+                });
+            });
+        </script>
+</body>
+</html>

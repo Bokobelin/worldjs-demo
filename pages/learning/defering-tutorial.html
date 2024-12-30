@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learn World.js deffering</title>
+</head>
+<body>
+    <style>
+        html, body {
+            display: flex;
+            width: 99vw;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            overflow-x: clip;
+        }
+
+        .center {
+            text-align: center;
+            width: 100vw;
+        }
+
+        .code {
+            /*
+            margin: 5vh;
+            padding: 1.5vh;
+            */
+            margin-left: 5vh;
+            margin-right: 5vh;
+            background-color: darkslategrey;
+            color: wheat;
+            width: fit-content;
+            line-break: anywhere;
+        }
+
+        p {
+            padding-left: 5vh;
+            padding-right: 5vh;
+        }
+    </style>
+
+    <h1 class="center">Learn deferring in World.js</h1>
+
+    <p>
+        Now that you know how to use a router (if you do not, refer to our homepage), you can learn how to defer events.
+        For that, you can use app.defer() (assuming app is a WorldRouter()).
+        Let's go back where our introduction tutorial left us:
+
+        <div class="code">
+            <pre>
+&lt;script&gt;
+    //Create a router.
+    const app = new WorldRouter();
+
+    //add a route to the router
+    //every time we go to that uri, we will see what it returns be the content of our div.
+    //The old contents are wiped out.
+    //app.addRoute(route_path_uri, function_for_content);
+    //a lambda function is suitable, as we will not have two pages with the same content.
+    //the return value of the function is the HTML to be renderer.
+    app.addRoute('/contact', () => {
+        console.log('Contact page loaded!');
+        return '&lt;h1&gt;Contact page&lt;/h1&gt;';
+    });
+
+    //add a route from the body of a file.
+    app.addRouteFile('/mypage', 'mypage.html');
+&lt/script&gt;
+            </pre>
+        </div>
+
+        Now let's add some deferring before logging: you do not want the console.log to keep all the javascript in the page executing until it is done (there is no javascript here, just imagine it) ?
+        So we need to add deferring. You can defer after the full load of the HTML or after the excution of all scripts. Let's add some JS one here:
+
+        <div class="code">
+            <pre>
+&lt;script&gt;
+    //Create a router.
+    const app = new WorldRouter();
+
+    //add a route to the router
+    //every time we go to that uri, we will see what it returns be the content of our div.
+    //The old contents are wiped out.
+    //app.addRoute(route_path_uri, function_for_content);
+    //a lambda function is suitable, as we will not have two pages with the same content.
+    //the return value of the function is the HTML to be renderer.
+    app.addRoute('/contact', () => {
+        //change to app.defer('HTML', &lt;function&gt;) for waiting for HTML to load.
+        app.defer('JS', () => { console.log('Contact page loaded!'); });
+        return '&lt;h1&gt;Contact page&lt;/h1&gt;';
+    });
+
+    //add a route from the body of a file.
+    app.addRouteFile('/mypage', 'mypage.html');
+&lt/script&gt;
+            </pre>
+        </div>
+
+        Now, if you load the page, it will log after all other JS scripts have executed. But you will probably not notice it since the router is so blazingly fast!
+    </p>
+</body>
+</html>

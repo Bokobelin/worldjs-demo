@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        html, body {
+            display: flex;
+            width: 99vw;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            overflow-x: clip;
+        }
+
+        .center {
+            text-align: center;
+            width: 100vw;
+        }
+
+        .code {
+            /*
+            margin: 5vh;
+            padding: 1.5vh;
+            */
+            margin-left: 5vh;
+            margin-right: 5vh;
+            background-color: darkslategrey;
+            color: wheat;
+            width: fit-content;
+            line-break: anywhere;
+        }
+
+        p {
+            padding-left: 5vh;
+            padding-right: 5vh;
+        }
+    </style>
+</head>
+<body>
+    <p>
+        Let's introduce a new element : &lt;world-suspense&gt;!
+        <br>
+        It will display a loading message while the content is loading.
+        <br>
+        It will also display an error message if the content fails to load.
+    </p>
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>World.js homepage</title>
+    <script src="./../world-router.js"></script>
+</head>
+<!--In files used in a world.js project, the head on files that are not the main one do not matter.-->
+<body>
+    <style>
+        html, body {
+            display: flex;
+            width: 99vw;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            flex-direction: column;
+        }
+
+        .center {
+            text-align: center;
+            width: 100vw;
+        }
+
+        .code {
+
+            margin: 5vh;
+            padding: 1vh;
+
+            margin-left: 5vh;
+            margin-right: 5vh;
+            background-color: darkslategrey;
+            color: wheat;
+            width: fit-content;
+        }
+
+        p {
+            padding-left: 5vh;
+            padding-right: 5vh;
+        }
+    </style>
+        <h1 class="center">Welcome to World.js!</h1>
+        <h2 class="center">World.js is the perfect framework if you want to build a multi-page app who seems like a single-page one.</h2>
+        <br>
+            This is made possible with a custom router. But let's dive into it.
+
+            You first need to download the world-router.js file, and put it in your project.
+            Then reference it in HTML like this:
+
+            <div class="code">
+                <pre>
+    &lt;script src="world-router.js"&gt;&lt/script&gt;
+                </pre>
+            </div>
+
+            You can put it in the head or the body of your HTML file, but put it before the other scripts who access it.
+            Now, create a div with a class of app.
+
+            Important note: the class of the div <strong>MUST</strong> be 'app', and only 1 element can have that class. If several have the 'app' class, the first one will be assigned to the router.
+
+            Your code should now look something like that:
+
+            <div class="code">
+                <pre>
+    &lt;script src="world-router.js"&gt;&lt/script&gt;
+    &lt;div class="app"&gt;&lt;/div&gt;
+                </pre>
+            </div>
+
+            Now, anything you put outside of the div will be the same and never reloaded when navigating with the router (wich we will create later). It can be the head, the scripts, a header and footer like on this website...
+            All that you put inside the router will be deleted at every navigation.
+            But you must be asking, how do we navigate with it?
+
+            First, you need to add a link to a page (that does not have to be a file), let's say /contact. Create a link to it:
+
+            <div class="code">
+                <pre>
+    &lt;script src="world-router.js"&gt;&lt/script&gt;
+    &lt;div class="links"&gt;
+        &lt;a href="/about" class="nav-link" /&gt;
+    &lt;/div&gt;
+    &lt;div class="app"&gt;&lt;/div&gt;
+                </pre>
+            </div>
+
+            Important: the class of the link must be nav-link.
+
+            You will notice that if you try to click the link, you will get a 404.
+            So let's create a script to actually fill that page with something. Add a script tag as following:
+
+            <div class="code">
+                <pre>
+    &lt;script&gt;
+        //Create a router.
+        const app = new WorldRouter();
+
+        //add a route to the router
+        //every time we go to that uri, we will see what it returns be the content of our div.
+        //The old contents are wiped out.
+        //app.addRoute(route_path_uri, function_for_content);
+        //a lambda function is suitable, as we will not have two pages with the same content.
+        //the return value of the function is the HTML to be renderer.
+        app.addRoute('/contact', () => {
+            console.log('Contact page loaded!');
+            return '&lt;h1&gt;Contact page&lt;/h1&gt;';
+        });
+    &lt/script&gt;
+                </pre>
+            </div>
+
+            Now load the page and click on the link. You should see the message we coded to display.
+            <br>
+            You will now wonder: 'But for more complicated pages? You can't just hardcode a string for them!'. And you are right.
+            So we added a way for you to load HTML from a file.
+            <br>
+            Create an HTML file and put what you want in the body. Name it mypage.html.
+            Notice: the &lt;head&gt; does not do anything when loading an HTML file with a router.
+            <br>
+            Now add a way to access it in the main file by adding a link to /mypage and modify the script like so:
+
+            <div class="code">
+                <pre>
+    &lt;script&gt;
+        //Create a router.
+        const app = new WorldRouter();
+
+        //add a route to the router
+        //every time we go to that uri, we will see what it returns be the content of our div.
+        //The old contents are wiped out.
+        //app.addRoute(route_path_uri, function_for_content);
+        //a lambda function is suitable, as we will not have two pages with the same content.
+        //the return value of the function is the HTML to be renderer.
+        app.addRoute('/contact', () => {
+            console.log('Contact page loaded!');
+            return '&lt;h1&gt;Contact page&lt;/h1&gt;';
+        });
+
+        //add a route from the body of a file.
+        app.addRouteFile('/mypage', 'mypage.html');
+    &lt/script&gt;
+                </pre>
+            </div>
+
+            Now try it out.
+            Can you see the power of World.js?
+            To load the main page (what you are seeing now) from the about page, it only took 7ms to render!
+            At the time of test, the body of this file was 134 lines long.
+            That means an average of 0,0522388060ms for each line to render!
+            <br>
+            To learn more about World.js, and see how you can use features like deferring, <a href="/documentation" class="nav-link">visit our lessons here!</a>
+        </p>
+</body>
+</html>
